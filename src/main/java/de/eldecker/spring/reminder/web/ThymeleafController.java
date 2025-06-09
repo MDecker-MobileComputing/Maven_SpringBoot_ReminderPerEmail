@@ -1,7 +1,5 @@
 package de.eldecker.spring.reminder.web;
 
-import static org.springframework.data.domain.Sort.Direction.ASC;
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,10 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import org.springframework.data.domain.Sort;
-
 import de.eldecker.spring.reminder.db.ReminderEntity;
-import de.eldecker.spring.reminder.db.ReminderRepo;
 import de.eldecker.spring.reminder.logik.ReminderService;
 import de.eldecker.spring.reminder.model.ReminderException;
 
@@ -33,22 +28,15 @@ public class ThymeleafController {
     
     /** Bean mit Geschäftslogik. */
     private ReminderService _reminderService;
-    
-    /** Bean für direkten Zugriff auf DB. */
-    private ReminderRepo _reminderRepo;
-    
-    /** Sortierobjekt für Reminder-Liste nach Fälligkeit aufsteigend. */
-    private final Sort _sortByZeitpunktFaelligAsc = Sort.by( ASC, "_zeitpunktFaellig" );
-    
+        
     
     /**
      * Konstruktor für Dependency Injection.
      */
     @Autowired
-    public ThymeleafController( ReminderService reminderService, ReminderRepo reminderRepo ) {
+    public ThymeleafController( ReminderService reminderService ) {
     
         _reminderService = reminderService;
-        _reminderRepo    = reminderRepo;
     }
     
     
@@ -116,8 +104,7 @@ public class ThymeleafController {
     @GetMapping( "/liste" )
     public String reminderListe( Model model ) {
                 
-        final List<ReminderEntity> liste = _reminderRepo.findAll( _sortByZeitpunktFaelligAsc );
-        
+        final List<ReminderEntity> liste = _reminderService.getAlleReminderSortiert();
         model.addAttribute( "reminderListe", liste );
         
         return "liste";
