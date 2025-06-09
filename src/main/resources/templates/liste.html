@@ -10,14 +10,20 @@
 
     <h1>Reminder-Liste</h1>
 
-    <h2>Offene Reminder</h2>
+    <h2>
+        Offene Reminder
+        ( <span th:text="${reminderListe.?[!schonVersendet].size()}">0</span> )
+    </h2>
     <p th:each="reminder : ${reminderListe}" 
        th:if="${!reminder.schonVersendet}" 
        th:text="${reminder}">        
     </p>
     <br><br>
 
-    <h2>Bereits versendete Reminder</h2>
+    <h2>
+        Versendete Reminder
+        ( <span th:text="${reminderListe.?[schonVersendet].size()}">0</span> )
+    </h2>
     <p th:each="reminder : ${reminderListe}" 
        th:if="${reminder.schonVersendet}" 
        th:text="${reminder}">        

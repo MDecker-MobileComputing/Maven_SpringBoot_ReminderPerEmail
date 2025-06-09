@@ -163,7 +163,8 @@ public class ReminderEntity {
      * Vergleich aufrufendes Objekt auf Gleichmit mit dem als Argument übergebenen
      * Objekt.
      * 
-     * @return {@code true} gdw. alle Attribute (bis auf die ID) gleich sind.
+     * @return {@code true} gdw. alle Attribute (bis auf die ID, weil die evtl. erst
+     *         nocht von JPA gesetzt werden muss) gleich sind.
      */
     @Override
     public boolean equals( Object obj ) {
