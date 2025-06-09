@@ -73,3 +73,22 @@ In der linken Leiste gibt es auch eine Sektion "Standard Option" (muss evtl. auf
 Um die "Visualization" zu speichern ist auf den blauen Button "Apply" rechts oben zu klicken.
 
 <br>
+
+Die folgende Flux-Query zeigt nur eine Zeitreihe an, bei der die Gesamtzahl der Reminder (egal ob schon versendet oder nicht) angezeigt wird:
+
+```
+from(bucket: "reminder-bucket")
+  |> range(start: -30d)
+  |> filter(fn: (r) => r._measurement == "reminder_anzahl")
+  |> filter(fn: (r) => r._field == "schon_versendet" or r._field == "nicht_versendet")
+  |> pivot(rowKey: ["_time"], columnKey: ["_field"], valueColumn: "_value")
+  |> map(fn: (r) => ({
+      _time: r._time,
+      _value: r.schon_versendet + r.nicht_versendet,
+      _field: "total_versendet",
+      _measurement: r._measurement,
+      // Include any other tags you need to preserve
+    }))
+```
+
+<br>
