@@ -47,6 +47,12 @@ public class ReminderEntity {
     @Column( name = "ZEITPUNKT_FAELLIG" )
     private LocalDateTime _zeitpunktFaellig;
     
+    /** 
+     * Zeitpunkt, zu dem die Email tatsächlich versendet wurde. 
+     */
+    @Column( name = "ZEITPUNKT_VERSENDET" )
+    private LocalDateTime _zeitpunktVersendet;    
+    
     /**
      * {@code true}, gdw. der Reminder bereits per Email versendet wurde;
      * kann nur {@code true} sein, wenn der Zeitpunkt der Fälligkeit
@@ -121,6 +127,18 @@ public class ReminderEntity {
         
         this._zeitpunktFaellig = zeitpunktFaelligkeit;
     }
+    
+        
+    public LocalDateTime getZeitpunktVersendet() {
+        
+        return _zeitpunktVersendet;
+    }
+
+
+    public void setZeitpunktVersendet( LocalDateTime zeitpunktVersendet ) {
+        
+        _zeitpunktVersendet = zeitpunktVersendet;
+    }
 
 
     public boolean isSchonVersendet() {
@@ -140,6 +158,17 @@ public class ReminderEntity {
         return formatiere( _zeitpunktFaellig );
     }
     
+    
+    /**
+     * Convience-Methode, die Attribute "schon_versendet" und "zeitpunkt_versendet"
+     * setzt, wenn für den Reminder eine Email versendet wurde.
+     */
+    public void wurdeVersendet() {
+    
+        setSchonVersendet( true );
+        setZeitpunktVersendet( now() );
+    }
+    
 
     /**
      * Hash-Wert für aufrufendes Objekt.
@@ -153,7 +182,8 @@ public class ReminderEntity {
         return Objects.hash(
                     _reminderText, 
                     _zeitpunktFaellig, 
-                    _zeitpunktAngelegt, 
+                    _zeitpunktAngelegt,
+                    _zeitpunktVersendet,
                     _schonVersendet
               );
     }
@@ -180,9 +210,10 @@ public class ReminderEntity {
 
         if ( obj instanceof ReminderEntity other ) {
 
-            return _reminderText.equals(      other._reminderText      ) && 
-                   _zeitpunktFaellig.equals(  other._zeitpunktFaellig  ) &&
-                   _zeitpunktAngelegt.equals( other._zeitpunktAngelegt ) &&
+            return _reminderText.equals(       other._reminderText      ) && 
+                   _zeitpunktFaellig.equals(   other._zeitpunktFaellig  ) &&
+                   _zeitpunktAngelegt.equals(  other._zeitpunktAngelegt ) &&
+                   _zeitpunktVersendet.equals( other._zeitpunktAngelegt ) && 
                    _schonVersendet == other._schonVersendet;
             
         } else {

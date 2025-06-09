@@ -152,17 +152,28 @@ public class ReminderService {
     public void versendeEmails() {
         
         final Specification<ReminderEntity> spec = buildSpecFuerReminderZumVersenden();
-        List<ReminderEntity> faelligeReminderList = 
-                        _reminderRepo.findAll( spec, _sortByZeitpunktFaelligAsc );
+        final List<ReminderEntity> faelligeReminderList = 
+                                        _reminderRepo.findAll( spec, _sortByZeitpunktFaelligAsc );
 
         LOG.info( "Anzahl fälliger Reminder gefunden : {}", faelligeReminderList.size() );
         
+        int versendetZaehler = 0;
         for ( ReminderEntity r : faelligeReminderList ) {
             
-            final String betreff = "[Reminder] " + r.getReminderText();
+            final String betreff = "[Reminder] "                   + r.getReminderText();
             final String body    = "siehe Betreff\n\nFälligkeit: " + r.getZeitpunktFaelligkeitFormatiert();
             
             _emailSender.sendeEmail( betreff, body );
+            
+            r.wurdeVersendet();                        
+            _reminderRepo.save( r );
+            
+            versendetZaehler++;
+        }
+        
+        if ( versendetZaehler > 0 ) {
+            
+            LOG.info( "Es wurden {} Emails versendet.", versendetZaehler );
         }
     }
     
