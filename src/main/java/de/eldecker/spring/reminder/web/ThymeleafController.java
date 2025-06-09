@@ -18,6 +18,7 @@ public class ThymeleafController {
 
     private static Logger LOG = LoggerFactory.getLogger( ThymeleafController.class );
     
+    
     /**
      * Anlegen eines neuen Reminders.
      *
