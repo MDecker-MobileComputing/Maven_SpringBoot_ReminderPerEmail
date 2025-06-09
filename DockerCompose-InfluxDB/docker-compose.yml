@@ -15,3 +15,16 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=reminder-org
       - DOCKER_INFLUXDB_INIT_BUCKET=reminder-bucket
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mein-super-geheimes-auth-token
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=g3h3im
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    
