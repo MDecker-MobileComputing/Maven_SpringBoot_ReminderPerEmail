@@ -52,7 +52,7 @@ Messwerte verloren, sowie die in Grafana konfigurierten Dashboards.
 
 ---
 
-## Flux Query für Zeitreihendiagramm ##
+## Flux-Query für Zeitreihendiagramm ##
 
 <br>
 
@@ -66,6 +66,10 @@ from(bucket: "reminder-bucket")
   |> filter(fn: (r) => r._field == "schon_versendet" or r._field == "nicht_versendet")
 ``` 
 
-Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite.  
+Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite, um folgendes einzugeben: "Reminder: Versendet und ausstehend"  
+
+In der linken Leiste gibt es auch eine Sektion "Standard Option" (muss evtl. aufgeklappt werden), in der man als "Min"-Wert "0" eingeben kann.
+
+Um die "Visualization" zu speichern ist auf den blauen Button "Apply" rechts oben zu klicken.
 
 <br>
