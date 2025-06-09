@@ -5,6 +5,7 @@ import static java.time.Instant.now;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.WriteApiBlocking;
@@ -15,6 +16,7 @@ import com.influxdb.client.write.Point;
 /**
  * Bean-Klasse für das Schreiben von Werten in die Zeitreihendatenbank "InfluxDB".
  */
+@Component
 public class InfluxDB {
 
     private static Logger LOG = LoggerFactory.getLogger( InfluxDB.class );
@@ -36,6 +38,7 @@ public class InfluxDB {
     /** Feld für {@link #MEASUREMENT_REMINDER_ANZAHL} für Anzahl noch nicht versendeter Reminder. */
     private static final String FELD_NICHT_VERSENDET = "nicht_versendet";
     
+    
     /**
      * Konstruktor für Dependency Injection.
      */
@@ -46,6 +49,14 @@ public class InfluxDB {
     }
     
     
+    /**
+     * Methode, um Metrikwerte für die Anzahl der bereits versendeten und noch nicht
+     * versendeten Reminder in die InfluxDB zu schreiben.
+     * 
+     * @param anzahlSchonVersendet Anzahl der bereits versendeten Reminder
+     * 
+     * @param anzahlNochNichtVersendet Anzahl der Reminder, die noch nicht versendet wurden
+     */
     public void verbuche( int anzahlSchonVersendet, int anzahlNochNichtVersendet ) {
         
         try {
@@ -60,6 +71,8 @@ public class InfluxDB {
             
             influxSchreiber.writePoint( datenpunkt );
             
+            LOG.info( "Metrikwerte in InfluxDB geschrieben: schon versendet={}, nicht versendet={}",
+                      anzahlSchonVersendet, anzahlNochNichtVersendet);
         }
         catch ( Exception ex ) {
             

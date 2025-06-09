@@ -8,6 +8,10 @@ import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
 
 
+/**
+ * Diese Konfig-Klasse erzeugt die Beans, die für das Schreiben
+ * von Metriken in InfluxDB benötigt werden.
+ */
 @Configuration
 public class InfluxDBConfig {
 
@@ -24,6 +28,11 @@ public class InfluxDBConfig {
     private String _bucket;
 
     
+    /**
+     * Methode erzeugt Bean mit Client für Zugriff auf InfluxDB.
+     *  
+     * @return Konfigurierter InfluxDB-Client als Bean.
+     */
     @Bean
     public InfluxDBClient influxDBClient() {
         

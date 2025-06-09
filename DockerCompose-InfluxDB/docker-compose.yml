@@ -12,6 +12,6 @@ services:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=mein-influxdb-nutzer
       - DOCKER_INFLUXDB_INIT_PASSWORD=mein-super-geheimes-passwort
-      #- DOCKER_INFLUXDB_INIT_ORG=meine-organisation
+      - DOCKER_INFLUXDB_INIT_ORG=reminder-org
       - DOCKER_INFLUXDB_INIT_BUCKET=reminder-bucket
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mein-super-geheimes-auth-token

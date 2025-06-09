@@ -2,10 +2,10 @@ package de.eldecker.spring.reminder.db_jpa;
 
 import static java.time.LocalDateTime.now;
 
-import java.util.List; // Added import
+import java.util.List;
 
-import org.springframework.data.domain.Sort; // Added import
-import org.springframework.data.jpa.domain.Specification; // Added import
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -48,7 +48,7 @@ public interface ReminderRepo
      * 
      * @return Anzahl der versendeten Reminder
      */
-    long countBy_schonVersendet(boolean schonVersendet);
+    int countBy_schonVersendet( boolean schonVersendet );
     
     
     /**
