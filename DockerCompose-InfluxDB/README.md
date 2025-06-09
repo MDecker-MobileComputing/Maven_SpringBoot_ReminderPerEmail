@@ -56,12 +56,16 @@ Messwerte verloren, sowie die in Grafana konfigurierten Dashboards.
 
 <br>
 
-
-<br>
+Erzeugen Sie ein Dashboard und fügen Sie eine "Visualization" mit Typ "Time series hinzu. 
+Stellen Sie sicher, dass die oben angelegte "Data Source" ausgewählt ist und geben Sie dann die folgende Flux-Query ein:
 
 ```
 from(bucket: "reminder-bucket")
   |> range(start: -30d) // Adjust time range as needed
   |> filter(fn: (r) => r._measurement == "reminder_anzahl")
   |> filter(fn: (r) => r._field == "schon_versendet" or r._field == "nicht_versendet")
-  ``` 
+``` 
+
+Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite.  
+
+<br>
