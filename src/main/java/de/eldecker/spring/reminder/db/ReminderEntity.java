@@ -1,6 +1,7 @@
 package de.eldecker.spring.reminder.db;
 
-import static jakarta.persistence.GenerationType.AUTO;
+import static de.eldecker.spring.reminder.helferlein.ZeitpunktFormatierer.formatiere;
+import static jakarta.persistence.GenerationType.SEQUENCE;
 import static java.time.LocalDateTime.now;
 
 import java.time.LocalDateTime;
@@ -10,33 +11,40 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 
 /**
  * Entity-Klasse für Tabellen mit den einzelnen Remindern.
+ * <br><br>
+ * 
+ * Mit der Annotation {@code SequenceGenerator} wird der Sequenz-Generator für
+ * die Erzeugung der Primärschlüsselwerte so konfiguriert, dass immer noch
+ * ein Wert im Voraus erzeugt wird, so dass durch Neustarten der Anwendung 
  */
 @Entity
 @Table( name = "REMINDER" )
+@SequenceGenerator( name = "reminder_seq", sequenceName = "reminder_id_seq", allocationSize = 1 )
 public class ReminderEntity {
 
     /** Primärschlüssel, wird von JPA gesetzt/verwaltet. */
     @Id
-    @GeneratedValue(strategy = AUTO)
-    @Column(name = "id")
+    @GeneratedValue( strategy = SEQUENCE, generator = "reminder_seq" )
+    @Column( name = "ID" )
     private Long _id;
     
-    @Column(name = "REMINDER_TEXT")
+    @Column( name = "REMINDER_TEXT" )
     private String _reminderText;
     
-    @Column(name = "ZEITPUNKT_ANGELEGT")
+    @Column( name = "ZEITPUNKT_ANGELEGT" )
     private LocalDateTime _zeitpunktAngelegt;
     
     /** 
      * Frühester Zeitpunkt, zu dem dieser Reminder versendet werden soll;
      * idealerweise wird der Reminder kurz nach diesem Zeitpunkt versendet.
      */
-    @Column(name = "ZEITPUNKT_FAELLIG")
+    @Column( name = "ZEITPUNKT_FAELLIG" )
     private LocalDateTime _zeitpunktFaellig;
     
     /**
@@ -44,11 +52,13 @@ public class ReminderEntity {
      * kann nur {@code true} sein, wenn der Zeitpunkt der Fälligkeit
      * in der Vergangenheit liegt.
      */
-    @Column(name = "SCHON_VERSENDET")
+    @Column( name = "SCHON_VERSENDET" )
     private boolean _schonVersendet;
     
     
-    /** Leerer Default-Konstruktor */
+    /** 
+     * Leerer Default-Konstruktor.   
+     */
     public ReminderEntity() {}
     
     
@@ -83,7 +93,7 @@ public class ReminderEntity {
     }
 
 
-    public void setReminderText(String reminderText) {
+    public void setReminderText( String reminderText ) {
         
         _reminderText = reminderText;
     }
@@ -95,7 +105,7 @@ public class ReminderEntity {
     }
 
 
-    public void setZeitpunktAngelegt(LocalDateTime zeitpunktAngelegt) {
+    public void setZeitpunktAngelegt( LocalDateTime zeitpunktAngelegt ) {
         
         _zeitpunktAngelegt = zeitpunktAngelegt;
     }
@@ -107,7 +117,7 @@ public class ReminderEntity {
     }
 
 
-    public void setZeitpunktFaelligkeit(LocalDateTime zeitpunktFaelligkeit) {
+    public void setZeitpunktFaelligkeit( LocalDateTime zeitpunktFaelligkeit ) {
         
         this._zeitpunktFaellig = zeitpunktFaelligkeit;
     }
@@ -124,7 +134,19 @@ public class ReminderEntity {
         _schonVersendet = schonVersendet;
     }    
     
+    
+    public String getZeitpunktFaelligkeitFormatiert() {
+        
+        return formatiere( _zeitpunktFaellig );
+    }
+    
 
+    /**
+     * Hash-Wert für aufrufendes Objekt.
+     * 
+     * @return Hash-Wert, in dessen Berechnung alle Attributwerte eingangen sind,
+     *         bis auf die ID (weil diese u.U. erst noch von JPA gesetzt wird).
+     */
     @Override
     public int hashCode() {
 
@@ -137,6 +159,12 @@ public class ReminderEntity {
     }
     
     
+    /**
+     * Vergleich aufrufendes Objekt auf Gleichmit mit dem als Argument übergebenen
+     * Objekt.
+     * 
+     * @return {@code true} gdw. alle Attribute (bis auf die ID) gleich sind.
+     */
     @Override
     public boolean equals( Object obj ) {
 
@@ -163,11 +191,24 @@ public class ReminderEntity {
     }
     
     
+    /**
+     * String-Repräsentation des aufrufenden Objekts.
+     * 
+     * @return Text mit Fälligkeitszeitpunkt und Reminder-Text;
+     *         Beispiel:
+     *         <pre>
+     *         Fällig am 23.12.2026 (Mi.), 07:10 Uhr: "Schon alle Weihnachtsgeschenke besorgt?" (ID=123)
+     *         </pre>
+     */
     @Override
     public String toString() {
         
-        return String.format( "Reminder fällig am %s: \"%s\"", 
-                              _zeitpunktFaellig, _reminderText );
+        return String.format( 
+                    "Fällig am %s Uhr: \"%s\" (ID=%d)", 
+                    getZeitpunktFaelligkeitFormatiert(), 
+                    _reminderText,
+                    _id
+               );
     }
 
 }

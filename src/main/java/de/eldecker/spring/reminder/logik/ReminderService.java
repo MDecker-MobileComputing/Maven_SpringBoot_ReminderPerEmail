@@ -84,7 +84,7 @@ public class ReminderService {
                                                     tag, monat, jahr, 
                                                     stunde, minute );
             
-            throw new ReminderException( "Ungueltiger Faelligkeitszeitpunkt: " + zeitpunkt );
+            throw new ReminderException( "Ungültiger Fälligkeitszeitpunkt: " + zeitpunkt );
         }
         
         final ReminderEntity reminderEntity = new ReminderEntity( reminderText,  faelligkeitsZeitraum );

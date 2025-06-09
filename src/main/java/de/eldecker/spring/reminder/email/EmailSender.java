@@ -56,8 +56,7 @@ public class EmailSender {
     public void sendeEmail( String betreff, String emailInhalt ) throws MailException {
 
         final SimpleMailMessage message = new SimpleMailMessage();
-        
-        
+                
         message.setSubject( betreff     );
         message.setText(    emailInhalt );
         

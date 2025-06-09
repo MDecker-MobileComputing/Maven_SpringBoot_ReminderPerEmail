@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reminder-Liste</title>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../reminder-styles.css">
+</head>
+<body>
+
+    <h1>Reminder-Liste</h1>
+
+    <h2>Offene Reminder</h2>
+    <p th:each="reminder : ${reminderListe}" 
+       th:if="${!reminder.schonVersendet}" 
+       th:text="${reminder}">        
+    </p>
+    <br><br>
+
+    <h2>Bereits versendete Reminder</h2>
+    <p th:each="reminder : ${reminderListe}" 
+       th:if="${reminder.schonVersendet}" 
+       th:text="${reminder}">        
+    </p>
+    <br><br>
+
+    
+    <a href="../../reminder-anlegen-formular.html">Neuen Reminder anlegen</a>
+
+</body>
+</html>
