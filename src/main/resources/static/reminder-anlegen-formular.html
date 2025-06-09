@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Persönlichen Reminder anlegen</title>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="reminder-styles.css">
+</head>
+<body>
+
+    <h1>Persönlichen Reminder anlegen</h1>
+
+    <form action="app/v1/reminder-anlegen" method="post">
+
+       <span class="fett">Reminder-Text:</span>
+       <input type="text"
+              name="text"
+              required="required"
+              placeholder="Reminder-Text">
+       <br><br>
+
+       <span class="fett">Datum:</span>
+       <input type="number"
+              name="tag"
+              min="1"
+              max="31"
+              required="required"
+              placeholder="TT" >
+       .
+       <input type="number"
+              name="monat"
+              min="1"
+              max="12"
+              required="required"
+              placeholder="MM" >
+       .
+       <input type="number"
+              name="jahr"
+              min="2025"
+              max="2100"
+              required="required"
+              placeholder="JJJJ"
+              value="2026" >
+
+       <br><br>
+
+       <span class="fett">Uhrzeit:</span>
+       <input type="number"
+              name="stunde"
+              min="0"
+              max="23"
+              required="required"
+              placeholder="HH"
+              value="7" >
+       :
+       <input type="number"
+              name="minute"
+              min="0"
+              max="59"
+              required="required"
+              placeholder="MM"
+              value="10" >
+              
+        <br><br><br><br>
+
+        <input type="submit" value="Anlegen"      >
+        &nbsp;
+        <input type="reset"  value="Zurücksetzen" >
+
+    </form>
+    <br><br>
+
+
+</body>

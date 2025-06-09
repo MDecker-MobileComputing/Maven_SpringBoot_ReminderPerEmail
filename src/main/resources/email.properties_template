@@ -1,0 +1,8 @@
+# Kopie dieser Datei unter Namen "email.properties" anlegen und anpassen
+
+spring.mail.host=smtp.mein-provider.de
+spring.mail.port=587
+spring.mail.username=mein-nutzer@mein-provider.de
+spring.mail.password=v0ll-g3h3im-4n1g
+
+de.eldecker.reminder.email_empfaenger=ich@email-provider.de
