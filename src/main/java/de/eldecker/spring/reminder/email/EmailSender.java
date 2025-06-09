@@ -51,7 +51,7 @@ public class EmailSender {
      * 
      * @param emailInhalt Text für Body der Email
      * 
-     * @throws MailException Fehler beim VErsenden der Email aufgetreten
+     * @throws MailException Fehler beim Versenden der Email aufgetreten
      */
     public void sendeEmail( String betreff, String emailInhalt ) throws MailException {
 

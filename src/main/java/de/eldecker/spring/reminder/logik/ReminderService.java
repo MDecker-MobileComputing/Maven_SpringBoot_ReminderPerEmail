@@ -1,6 +1,6 @@
 package de.eldecker.spring.reminder.logik;
 
-import static de.eldecker.spring.reminder.db.ReminderRepo.buildSpecFuerReminderZumVersenden;
+import static de.eldecker.spring.reminder.db_jpa.ReminderRepo.buildSpecFuerReminderZumVersenden;
 import static java.time.LocalDateTime.now;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
@@ -17,8 +17,8 @@ import org.springframework.scheduling.annotation.Scheduled; // Added import
 import org.springframework.stereotype.Service;
 
 import de.eldecker.spring.reminder.EmailReminderApplication;
-import de.eldecker.spring.reminder.db.ReminderEntity;
-import de.eldecker.spring.reminder.db.ReminderRepo;
+import de.eldecker.spring.reminder.db_jpa.ReminderEntity;
+import de.eldecker.spring.reminder.db_jpa.ReminderRepo;
 import de.eldecker.spring.reminder.email.EmailSender;
 import de.eldecker.spring.reminder.model.ReminderException;
 

@@ -1,4 +1,4 @@
-package de.eldecker.spring.reminder.db;
+package de.eldecker.spring.reminder.db_jpa;
 
 import static java.time.LocalDateTime.now;
 
@@ -41,6 +41,14 @@ public interface ReminderRepo
      * @return Eine Liste der gefilterten und sortierten Reminder-Entitäten
      */
     List<ReminderEntity> findAll( Specification<ReminderEntity> spec, Sort sort );
+    
+    
+    /**
+     * Zählt die Anzahl der Reminder, die bereits versendet wurden.
+     * 
+     * @return Anzahl der versendeten Reminder
+     */
+    long countBy_schonVersendet(boolean schonVersendet);
     
     
     /**

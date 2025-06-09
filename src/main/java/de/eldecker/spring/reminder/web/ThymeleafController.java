@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.eldecker.spring.reminder.db.ReminderEntity;
+import de.eldecker.spring.reminder.db_jpa.ReminderEntity;
 import de.eldecker.spring.reminder.logik.ReminderService;
 import de.eldecker.spring.reminder.model.ReminderException;
 

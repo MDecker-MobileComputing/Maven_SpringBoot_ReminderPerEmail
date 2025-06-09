@@ -1,4 +1,4 @@
-package de.eldecker.spring.reminder.db;
+package de.eldecker.spring.reminder.db_jpa;
 
 import static de.eldecker.spring.reminder.helferlein.ZeitpunktFormatierer.formatiere;
 import static jakarta.persistence.GenerationType.SEQUENCE;
