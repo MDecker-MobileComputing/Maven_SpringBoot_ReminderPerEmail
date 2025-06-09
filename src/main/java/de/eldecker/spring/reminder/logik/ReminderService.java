@@ -173,7 +173,7 @@ public class ReminderService {
         
         if ( versendetZaehler > 0 ) {
             
-            LOG.info( "Es wurden {} Emails versendet.", versendetZaehler );
+            LOG.info( "Es wurde(n) {} Email(s) versendet.", versendetZaehler );
         }
     }
     
