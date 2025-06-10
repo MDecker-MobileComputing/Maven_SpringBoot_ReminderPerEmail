@@ -9,7 +9,7 @@ Dieser Ordner enthält eine Datei `docker-compose.yml`, in der zwei Container de
 
 <br>
 
-Befehle zur Steuerung: 
+Befehle zur Steuerung:
 
 * Start und Erzeugung: `docker-compose up`
 * Pausieren: `docker-compose stop`
@@ -56,7 +56,7 @@ Messwerte verloren, sowie die in Grafana konfigurierten Dashboards.
 
 <br>
 
-Erzeugen Sie ein Dashboard und fügen Sie eine "Visualization" mit Typ "Time series hinzu. 
+Erzeugen Sie ein Dashboard und fügen Sie eine "Visualization" mit Typ "Time series" hinzu.
 Stellen Sie sicher, dass die oben angelegte "Data Source" ausgewählt ist und geben Sie dann die folgende Flux-Query ein:
 
 ```
@@ -64,17 +64,17 @@ from(bucket: "reminder-bucket")
   |> range(start: -30d) // Adjust time range as needed
   |> filter(fn: (r) => r._measurement == "reminder_anzahl")
   |> filter(fn: (r) => r._field == "schon_versendet" or r._field == "nicht_versendet")
-``` 
+```
 
-Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite, um folgendes einzugeben: "Reminder: Versendet und ausstehend"  
+Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite, um folgendes einzugeben: "Reminder: Versendet und ausstehend"
 
-In der linken Leiste gibt es auch eine Sektion "Standard Option" (muss evtl. aufgeklappt werden), in der man als "Min"-Wert "0" eingeben kann.
+In der linken Leiste gibt es auch eine Sektion "Standard Option" (muss evtl. aufgeklappt werden), in der man als "Min"-Wert `0` eingeben kann.
 
 Um die "Visualization" zu speichern ist auf den blauen Button "Apply" rechts oben zu klicken.
 
 <br>
 
-Die folgende Flux-Query zeigt nur eine Zeitreihe an, bei der die Gesamtzahl der Reminder (egal ob schon versendet oder nicht) angezeigt wird:
+Die folgende Flux-Query zeigt nur eine Zeitreihe an, bei der die Gesamtzahl der Reminder (egal ob schon versendet oder nicht) dargestellt wird:
 
 ```
 from(bucket: "reminder-bucket")
@@ -90,5 +90,9 @@ from(bucket: "reminder-bucket")
       // Include any other tags you need to preserve
     }))
 ```
+
+<br>
+
+Weitere Infos zur Abfragesprache "Flux": https://awesome.influxdata.com/docs/part-2/introduction-to-flux/
 
 <br>
