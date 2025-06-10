@@ -6,9 +6,14 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * Diese Bean-Klasse enthält Logik, die unmittelbar nach Initialisierung
+ * der Spring-Boot-Anwendung ausgeführt wird.
+ */
 @Component
 public class MetrikenNachStartSender implements ApplicationRunner {
 
+	/** Bean mit Geschäftslogik für Verwaltung von Reminder. */
     private ReminderService _reminderService;
     
     
