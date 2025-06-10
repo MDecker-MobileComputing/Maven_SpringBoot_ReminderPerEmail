@@ -152,12 +152,14 @@ public class ReminderService {
 
 
     /**
-     * Methode zum Versenden fälliger Reminder, wird jede Minute ausgeführt.
-     * Für "Einschalten" der Annotation "Scheduled" wurde die Klasse 
-     * {@link EmailReminderApplication} mit Annotation {@code EnableScheduling}
-     * versehen.
+     * Methode zum Versenden fälliger Reminder, wird regelmäßig ausgeführt;
+     * es wird bei jedem Aufruf (auch wenn keine Emails versendet wurden)
+     * auch die Anzahl der Emails in die InfluxDB geschrieben.
      * <br><br>
      * 
+     * Für "Einschalten" der Annotation "Scheduled" wurde die Klasse 
+     * {@link EmailReminderApplication} mit Annotation {@code EnableScheduling}
+     * versehen. 
      * Werte der Attribute der Annotation {@code Scheduled} sind jeweils
      * Zeitspannen in Millisekunden. 
      */
