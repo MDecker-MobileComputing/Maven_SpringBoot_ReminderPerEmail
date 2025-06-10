@@ -25,7 +25,11 @@ import de.eldecker.spring.reminder.model.ReminderException;
 
 
 /**
- * Bean-Klasse mit Logik für Verwaltung von Remindern. 
+ * Bean-Klasse mit Logik für Verwaltung von Remindern:
+ * <ul>
+ * <li>Neue Reminder anlegen</li>
+ * <li>Emails für fällige Reminder verschicken</li>
+ * </ul>
  */
 @Service
 public class ReminderService {
@@ -166,7 +170,7 @@ public class ReminderService {
 
         LOG.info( "Anzahl faelliger Reminder gefunden : {}", faelligeReminderList.size() );
         
-        int versendetZaehler = 0;
+        int emailZaehler = 0;
         for ( ReminderEntity r : faelligeReminderList ) {
             
             final String betreff = "[Reminder] "                   + r.getReminderText();
@@ -177,14 +181,16 @@ public class ReminderService {
             r.wurdeVersendet();                        
             _reminderRepo.save( r );
             
-            versendetZaehler++;
+            emailZaehler++;
         }
         
-        if ( versendetZaehler > 0 ) {
+        if ( emailZaehler > 0 ) {
             
-            LOG.info( "Es wurde(n) {} Email(s) versendet.", versendetZaehler );
+            LOG.info( "Es wurde(n) {} Email(s) versendet.", emailZaehler );                                    
             erfasseAnzahlReminderInInfluxDB();
         }
+        
+        _influxDB.schreibeAnzahlEmails( emailZaehler );
     }
     
     
@@ -200,7 +206,7 @@ public class ReminderService {
         final int anzahlSchonVersendet = _reminderRepo.countBy_schonVersendet( true  );
         final int anzahlNichtVersendet = _reminderRepo.countBy_schonVersendet( false );
         
-        _influxDB.macheAnzahlSnapshot( anzahlSchonVersendet, anzahlNichtVersendet );
+        _influxDB.schreibeAnzahlReminder( anzahlSchonVersendet, anzahlNichtVersendet );
         
         return anzahlSchonVersendet + anzahlNichtVersendet;
     }

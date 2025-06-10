@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
  * Spring-Boot-Anwendung ausgeführt wird.
  */
 @Component
-public class MetrikenNachStartSender implements ApplicationRunner {
+public class DatenImporter implements ApplicationRunner {
 
-	private static Logger LOG = LoggerFactory.getLogger( MetrikenNachStartSender.class );
+	private static Logger LOG = LoggerFactory.getLogger( DatenImporter.class );
 	
 	
 	/** Bean mit Geschäftslogik für Verwaltung von Reminder. */
@@ -28,7 +28,7 @@ public class MetrikenNachStartSender implements ApplicationRunner {
 	 * Konstruktor für Dependency Injection.
 	 */
 	@Autowired
-	public MetrikenNachStartSender(ReminderService reminderService) {
+	public DatenImporter(ReminderService reminderService) {
 
 		_reminderService = reminderService;
 	}
