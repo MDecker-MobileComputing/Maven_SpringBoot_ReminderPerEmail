@@ -15,6 +15,11 @@ import com.influxdb.client.write.Point;
 
 /**
  * Bean-Klasse für das Schreiben von Werten in die Zeitreihendatenbank "InfluxDB".
+ * <br><br>
+ * 
+ * Zum Begriff "Measurement":
+ * Eine Measurement kann mehrere Zeitreihen enthalten, wobei die einzelnen
+ * Zeitreihen dann durch Tags unterschieden werden.
  */
 @Component
 public class InfluxDB {
@@ -25,18 +30,20 @@ public class InfluxDB {
     /** Bean für Zugriff auf InfluxDB-Instanz. */
     private final InfluxDBClient _influxDBClient;
     
-    /**
-     * Name einer Measurement.
-     * Eine Measurement kann mehrere Zeitreihen enthalten, wobei die einzelnen
-     * Zeitreihen dann durch Tag-Werte unterschieden werden.
-     */
+    /** Measurement für Anzahl versendeter und ausstehender Reminder. */
     private static final String MEASUREMENT_REMINDER_ANZAHL = "reminder_anzahl";
+
+    /** Measurement für Anzahl versendeter Emails. */
+    private static final String MEASUREMENT_REMINDER_EMAILS = "emails_versendet";
     
     /** Feld für {@link #MEASUREMENT_REMINDER_ANZAHL} für Anzahl bereits versendeter Reminder. */ 
     private static final String FELD_SCHON_VERSENDET = "schon_versendet";
     
     /** Feld für {@link #MEASUREMENT_REMINDER_ANZAHL} für Anzahl noch nicht versendeter Reminder. */
     private static final String FELD_NICHT_VERSENDET = "nicht_versendet";
+    
+    /** Feld für {@link #MEASUREMENT_REMINDER_EMAILS} . */
+    private static final String FELD_ANZAHL = "anzahl";
     
     
     /**
@@ -57,7 +64,7 @@ public class InfluxDB {
      * 
      * @param anzahlNochNichtVersendet Anzahl der Reminder, die noch nicht versendet wurden
      */
-    public void verbuche( int anzahlSchonVersendet, int anzahlNochNichtVersendet ) {
+    public void macheAnzahlSnapshot( int anzahlSchonVersendet, int anzahlNochNichtVersendet ) {
         
         try {
             
@@ -72,12 +79,43 @@ public class InfluxDB {
             influxSchreiber.writePoint( datenpunkt );
             
             LOG.info( "Metrikwerte in InfluxDB geschrieben: schon versendet={}, nicht versendet={}",
-                      anzahlSchonVersendet, anzahlNochNichtVersendet);
+                      anzahlSchonVersendet, anzahlNochNichtVersendet );
         }
         catch ( Exception ex ) {
             
             LOG.error( 
                     "Fehler beim Versuch Zeitreihenwerte fuer (nicht)versendete Reminder zu schreiben.", 
+                    ex );                     
+        }
+    }
+    
+    
+    /**
+     * Anzahl der Emails, die bei einem Lauf des "Versende-Jobs" versendet wurden, in
+     * InfluxDB schreiben.
+     * 
+     * @param anzahlReminderVersendet Anzahl Emails, die versendet wurden, kann auch 0 sein
+     *                                (wird in den meisten Fällen 0 sein?)
+     */
+    public void verbucheAnzahlVersendeteReminder( int anzahlReminderVersendet ) {
+
+        try {
+            
+            final WriteApiBlocking influxSchreiber = _influxDBClient.getWriteApiBlocking();            
+            
+            final Point datenpunkt = Point.measurement( MEASUREMENT_REMINDER_EMAILS )
+                                          .addField( FELD_ANZAHL, anzahlReminderVersendet    ) 
+                                          .time( now(), WritePrecision.S );
+            
+            influxSchreiber.writePoint( datenpunkt );
+            
+            LOG.info( "Metrikwerte in InfluxDB geschrieben: anzahlEmailsVersendet={}",
+            		anzahlReminderVersendet );
+        }
+        catch ( Exception ex ) {
+            
+            LOG.error( 
+                    "Fehler beim Versuch Anzahl versendeter Emails zu schreiben.", 
                     ex );                     
         }
     }

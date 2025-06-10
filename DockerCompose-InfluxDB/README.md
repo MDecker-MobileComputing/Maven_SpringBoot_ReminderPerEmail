@@ -9,7 +9,7 @@ Dieser Ordner enthält eine Datei `docker-compose.yml`, in der zwei Container de
 
 <br>
 
-Befehle zur Steuerung:
+**Befehle zur Steuerung:**
 
 * Start und Erzeugung: `docker-compose up`
 * Pausieren: `docker-compose stop`

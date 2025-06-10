@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * Diese Klasse definiert eine Bean, mit der Emails versendet werden können.
+ * Diese Klasse definiert eine Bean, mit der Emails für fällige Reminder versendet werden können.
  * <br><br>
  * 
  * Für Versenden von Email mit <i>Spring Boot</i> siehe auch
@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 public class EmailSender {
 
     private static Logger LOG = LoggerFactory.getLogger( EmailSender.class );
+    
     
     /** Email-Adresse des Absenders, es wird die Email-Adresse des Email-Kontos verwendet. */
     @Value( "${spring.mail.username}" )

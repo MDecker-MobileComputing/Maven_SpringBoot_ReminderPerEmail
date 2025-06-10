@@ -45,7 +45,7 @@ public class ThymeleafController {
      * 
      * @param model Objekt mit Platzhalterwerten für Template-Datei
      *
-     * @param reminderText für Betreffzeile der Reminder-Email 
+     * @param text für Betreffzeile der Reminder-Email 
      * 
      * @param tag Tag von Fälligkeitsdatum (1..31)
      * 
@@ -62,22 +62,22 @@ public class ThymeleafController {
      */
     @PostMapping( "/reminder-anlegen" )
     public String reminderAnlegen( Model model,
-                                   @RequestParam( value = "text"  , required = true ) String reminderText,
-                                   @RequestParam( value = "tag"   , required = true ) int tag            ,
-                                   @RequestParam( value = "monat" , required = true ) int monat          ,
-                                   @RequestParam( value = "jahr"  , required = true ) int jahr           ,
-                                   @RequestParam( value = "stunde", required = true ) int stunde         ,
-                                   @RequestParam( value = "minute", required = true ) int minute 
+                                   @RequestParam( value = "text"  , required = true ) String text  ,
+                                   @RequestParam( value = "tag"   , required = true ) int    tag   ,
+                                   @RequestParam( value = "monat" , required = true ) int    monat ,
+                                   @RequestParam( value = "jahr"  , required = true ) int    jahr  ,
+                                   @RequestParam( value = "stunde", required = true ) int    stunde,
+                                   @RequestParam( value = "minute", required = true ) int    minute 
                                  ) throws ReminderException { 
                 
         LOG.info( "Request erhalten fuer neuen Reminder: {}.{}.{}, {}:{} Uhr, Text: {}", 
-                  tag, monat, jahr, stunde, minute, reminderText );                                     
+                  tag, monat, jahr, stunde, minute, text );                                     
                 
         try {
         
             long reminderId = _reminderService.reminderAnlegen( tag, monat, jahr, 
                                                                 stunde, minute, 
-                                                                reminderText );
+                                                                text );
             
             final String erfolgText = String.format( "ERFOLG: Reminder unter ID %d angelegt.", reminderId );
             LOG.info( erfolgText );
@@ -85,7 +85,7 @@ public class ThymeleafController {
         }
         catch ( ReminderException ex ) {
             
-            final String fehlerText = "Fehler beim Anlegen von Reminder aufgetreten: " + ex.getMessage();             
+            final String fehlerText = "FEHLER – Reminder konnte nicht angelegt werden: " + ex.getMessage();             
             LOG.error( fehlerText, ex );            
             model.addAttribute( "nachricht", fehlerText );
         }
@@ -99,7 +99,7 @@ public class ThymeleafController {
      * 
      * @param model Objekt mit Platzhalterwerten für Template-Datei 
      * 
-     * @return liste
+     * @return Template-Datei "liste" (also "liste.html")
      */
     @GetMapping( "/liste" )
     public String reminderListe( Model model ) {

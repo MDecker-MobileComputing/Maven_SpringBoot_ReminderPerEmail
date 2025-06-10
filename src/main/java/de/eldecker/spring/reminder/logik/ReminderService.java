@@ -200,7 +200,7 @@ public class ReminderService {
         final int anzahlSchonVersendet = _reminderRepo.countBy_schonVersendet( true  );
         final int anzahlNichtVersendet = _reminderRepo.countBy_schonVersendet( false );
         
-        _influxDB.verbuche( anzahlSchonVersendet, anzahlNichtVersendet );
+        _influxDB.macheAnzahlSnapshot( anzahlSchonVersendet, anzahlNichtVersendet );
         
         return anzahlSchonVersendet + anzahlNichtVersendet;
     }
