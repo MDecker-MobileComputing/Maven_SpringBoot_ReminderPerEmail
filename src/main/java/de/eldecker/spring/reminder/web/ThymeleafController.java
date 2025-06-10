@@ -79,7 +79,7 @@ public class ThymeleafController {
                                                                 stunde, minute, 
                                                                 reminderText );
             
-            final String erfolgText = String.format( "Reminder unter ID=%d angelegt.", reminderId );
+            final String erfolgText = String.format( "ERFOLG: Reminder unter ID %d angelegt.", reminderId );
             LOG.info( erfolgText );
             model.addAttribute( "nachricht", erfolgText );            
         }
