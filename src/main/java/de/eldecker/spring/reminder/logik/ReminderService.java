@@ -192,13 +192,17 @@ public class ReminderService {
      * Methode, mit der Anzahl der Reminder in der InfluxDB gespeichert werden.
      * Sollte immer nach Versenden eines Reminders oder nach Anlegen eines neuen Reminders
      * aufgerufen werden.
+     * 
+     * @return Gesamtanzahl Reminder (also versendete und noch ausstehende)
      */
-    public void erfasseAnzahlReminderInInfluxDB() {
+    public int erfasseAnzahlReminderInInfluxDB() {
 
         final int anzahlSchonVersendet = _reminderRepo.countBy_schonVersendet( true  );
         final int anzahlNichtVersendet = _reminderRepo.countBy_schonVersendet( false );
         
         _influxDB.verbuche( anzahlSchonVersendet, anzahlNichtVersendet );
+        
+        return anzahlSchonVersendet + anzahlNichtVersendet;
     }
     
 }
