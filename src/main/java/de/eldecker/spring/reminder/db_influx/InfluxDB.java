@@ -11,6 +11,7 @@ import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.WriteApiBlocking;
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
+import com.influxdb.exceptions.InfluxException;
 
 
 /**
@@ -80,7 +81,7 @@ public class InfluxDB {
             LOG.info( "Metrikwerte in InfluxDB geschrieben: schon versendet={}, nicht versendet={}",
                       anzahlSchonVersendet, anzahlNochNichtVersendet );
         }
-        catch ( Exception ex ) {
+        catch ( InfluxException ex ) {
 
             LOG.error(
                     "Fehler beim Versuch Zeitreihenwerte fuer (nicht)versendete Reminder zu schreiben.",
@@ -95,7 +96,7 @@ public class InfluxDB {
      *
      * @param anzahlReminderVersendet Anzahl Emails, die versendet wurden, kann auch 0 sein
      *                                (wird in den meisten Fällen 0 sein?)
-     */
+     */        
     public void schreibeAnzahlEmails( int anzahlReminderVersendet ) {
 
         try {
@@ -107,15 +108,11 @@ public class InfluxDB {
                                           .time( now(), WritePrecision.S );
 
             influxSchreiber.writePoint( datenpunkt );
-
-            LOG.info( "Metrikwerte in InfluxDB geschrieben: anzahlEmailsVersendet={}",
-            		anzahlReminderVersendet );
         }
-        catch ( Exception ex ) {
+        catch ( InfluxException ex ) {
 
             LOG.error(
-                    "Fehler beim Versuch Anzahl versendeter Emails zu schreiben.",
-                    ex );
+                    "Fehler beim Versuch Anzahl versendeter Emails zu schreiben.", ex );                    
         }
     }
 
