@@ -25,7 +25,9 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table( name = "REMINDER" )
-@SequenceGenerator( name = "reminder_seq", sequenceName = "reminder_id_seq", allocationSize = 1 )
+@SequenceGenerator( name           = "reminder_seq", 
+                    sequenceName   = "reminder_id_seq", 
+                    allocationSize = 1 )
 public class ReminderEntity {
 
     /** Primärschlüssel, wird von JPA gesetzt/verwaltet. */
