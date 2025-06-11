@@ -93,6 +93,15 @@ from(bucket: "reminder-bucket")
 
 <br>
 
+Noch eine Flux-Query für das Measurement mit der Anzahl der versendeten Emails:
+```
+from(bucket: "reminder-bucket")
+  |> range(start: -24h)
+  |> filter(fn: (r) => r._measurement == "emails_versendet")
+```
+
+<br>
+
 Weitere Infos zur Abfragesprache "Flux": https://awesome.influxdata.com/docs/part-2/introduction-to-flux/
 
 <br>
