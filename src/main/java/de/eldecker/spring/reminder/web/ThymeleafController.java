@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.eldecker.spring.reminder.db_influx.InfluxDB;
 import de.eldecker.spring.reminder.db_jpa.ReminderEntity;
 import de.eldecker.spring.reminder.logik.ReminderService;
 import de.eldecker.spring.reminder.model.ReminderException;
@@ -28,15 +29,20 @@ public class ThymeleafController {
     
     /** Bean mit Geschäftslogik. */
     private ReminderService _reminderService;
+     
+    private InfluxDB _influxDb;
         
     
     /**
      * Konstruktor für Dependency Injection.
      */
     @Autowired
-    public ThymeleafController( ReminderService reminderService ) {
+    public ThymeleafController( ReminderService reminderService,
+    		                    InfluxDB        influxDB
+    		                  ) {
     
         _reminderService = reminderService;
+        _influxDb        = influxDB;
     }
     
     
@@ -110,4 +116,22 @@ public class ThymeleafController {
         return "liste";
     }
     
+    
+    /**
+     * Methode für Seite mit Statistiken
+     *  
+     * @param model Objekt mit Platzhalterwerten für Template-Datei
+     * 
+     * @return Template-Datei "stats" (also "stats.html")
+     */
+    @GetMapping( "stats" )
+    public String statistiken( Model model ) {
+    	
+    	final int gesamtEmailsAnzahl = _influxDb.getGesamtzahlEmails();
+    	
+    	model.addAttribute( "anzahlVersendeterEmails", gesamtEmailsAnzahl );
+    	
+    	return "stats";
+    }
+
 }

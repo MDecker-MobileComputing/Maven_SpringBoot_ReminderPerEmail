@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Persönliche Reminder: Statistiken</title>
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../reminder-styles.css">
+</head>
+<body>
+
+    <h1>Persönliche Reminder: Statistiken</h1>
+
+    <p>
+        <span class="fett">Anzahl versendeter Emails insgesamt: </span>
+        <span th:text="${anzahlVersendeterEmails}"></span>
+    </p>
+
+    <p th:text="${nachricht}"></p>
+    <br><br><br>
+
+    <a href="../../reminder-anlegen-formular.html">Neuen Reminder anlegen</a>
+    <br><br>
+    <a href="./liste">Reminder-Liste</a>
+    <br><br>
+
+</body>

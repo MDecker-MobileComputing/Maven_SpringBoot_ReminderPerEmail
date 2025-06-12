@@ -2,16 +2,22 @@ package de.eldecker.spring.reminder.db_influx;
 
 import static java.time.Instant.now;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.influxdb.client.InfluxDBClient;
+import com.influxdb.client.QueryApi;
 import com.influxdb.client.WriteApiBlocking;
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
 import com.influxdb.exceptions.InfluxException;
+import com.influxdb.query.FluxRecord;
+import com.influxdb.query.FluxTable;
 
 
 /**
@@ -45,6 +51,9 @@ public class InfluxDB {
 
     /** Feld für {@link #MEASUREMENT_REMINDER_EMAILS} . */
     private static final String FELD_ANZAHL = "anzahl";
+    
+    @Value( "${influxdb.bucket}" )
+    private String _bucket;
 
 
     /**
@@ -115,5 +124,50 @@ public class InfluxDB {
                     "Fehler beim Versuch Anzahl versendeter Emails zu schreiben.", ex );                    
         }
     }
+    
+    
+    /**
+     * Methode liefert Anzahl der insgesamt versendeten Emails zurück.
+     *  
+     * @return Anzahl insgesamt versendeter Emails, {@code -1} wenn hierbei ein
+     *         Fehler aufgetreten ist.
+     */
+    
+    public int getGesamtzahlEmails() {
+
+    	final String fluxQuery = 
+	    	"""
+	        from(bucket: "%s")
+	          |> range(start: 0)
+	          |> filter(fn: (r) => r._measurement == "%s")
+	          |> filter(fn: (r) => r._field       == "%s")
+	          |> sum()
+	        """.formatted( _bucket, MEASUREMENT_REMINDER_EMAILS, FELD_ANZAHL );
+
+        try {
+        	
+            final QueryApi queryApi = _influxDBClient.getQueryApi();
+            
+            final List<FluxTable> tables = queryApi.query( fluxQuery );
+            
+            for ( FluxTable table : tables ) {
+            	
+                for ( FluxRecord record : table.getRecords() ) {
+                	
+                    final Object value = record.getValue();
+                    if ( value instanceof Number ) {
+                    	
+                        return ((Number) value).intValue();
+                    }
+                }
+            }
+            
+        } catch ( Exception ex ) {
+        	
+            LOG.error( "Fehler beim Lesen der Gesamtanzahl versendeter Emails aus InfluxDB.", ex );
+        }        
+        
+        return -1;
+    }    
 
 }

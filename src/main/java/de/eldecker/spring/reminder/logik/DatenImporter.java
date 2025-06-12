@@ -39,7 +39,7 @@ public class DatenImporter implements ApplicationRunner {
 	 * werden die Metriken für die Anzahl der Reminder in die InfluxDB geschrieben.
 	 */
 	@Override
-	public void run(ApplicationArguments args) throws Exception {
+	public void run( ApplicationArguments args ) throws Exception {
 		
 		final int anzahlReminder = _reminderService.erfasseAnzahlReminderInInfluxDB();
 		

@@ -15,16 +15,16 @@ import com.influxdb.client.InfluxDBClientFactory;
 @Configuration
 public class InfluxDBConfig {
 
-    @Value("${influxdb.url}")
+    @Value( "${influxdb.url}" )
     private String _influxDBUrl;
 
-    @Value("${influxdb.token}")
+    @Value( "${influxdb.token}" )
     private String _token;
 
-    @Value("${influxdb.org}")
+    @Value( "${influxdb.org}" )
     private String _org;
 
-    @Value("${influxdb.bucket}")
+    @Value( "${influxdb.bucket}" )
     private String _bucket;
 
     
