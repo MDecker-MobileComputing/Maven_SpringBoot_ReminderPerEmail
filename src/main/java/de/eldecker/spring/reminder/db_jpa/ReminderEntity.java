@@ -162,7 +162,7 @@ public class ReminderEntity {
     
     
     /**
-     * Convience-Methode, die Attribute "schon_versendet" und "zeitpunkt_versendet"
+     * Convenience-Methode, die Attribute "schon_versendet" und "zeitpunkt_versendet"
      * setzt, wenn für den Reminder eine Email versendet wurde.
      */
     public void wurdeVersendet() {
