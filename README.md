@@ -5,7 +5,7 @@
 Dieses Repo enthält eine Spring-Boot-Anwendung, die demonstriert, wie man
 programmatisch Emails versendet. Bei den versendeten Emails handelt es sich um persönliche Erinnerungen.
 
-Es werden Push-Metriken in InfluxDB geschrieben.
+Es werden Push-Metriken in eine Instanz der Zeitreihendatenbank "InfluxDB" geschrieben.
 
 <br>
 

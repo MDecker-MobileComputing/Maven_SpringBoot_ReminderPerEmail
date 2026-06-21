@@ -1,10 +1,7 @@
-version: '3.8'
-
-# Offizielles Docker-Image für InfluxDB: https://hub.docker.com/_/influxdb
 
 services:
   influxdb:
-    image: influxdb:2.7
+    image: influxdb:2.9.1 # https://hub.docker.com/_/influxdb
     container_name: influxdb
     ports:
       - "8086:8086"
@@ -17,7 +14,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mein-super-geheimes-auth-token
 
   grafana:
-    image: grafana/grafana:10.4.2
+    image: grafana/grafana:13.0.2-ubuntu
     container_name: grafana
     ports:
       - "3000:3000"

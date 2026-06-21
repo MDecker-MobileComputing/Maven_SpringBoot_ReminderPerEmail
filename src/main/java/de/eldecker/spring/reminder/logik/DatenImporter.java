@@ -28,7 +28,7 @@ public class DatenImporter implements ApplicationRunner {
 	 * Konstruktor für Dependency Injection.
 	 */
 	@Autowired
-	public DatenImporter(ReminderService reminderService) {
+	public DatenImporter( ReminderService reminderService ) {
 
 		_reminderService = reminderService;
 	}
@@ -60,7 +60,7 @@ public class DatenImporter implements ApplicationRunner {
 					                          "Schon Geschenke für morgen gekauft?" );			
 			
 			_reminderService.reminderAnlegen( 30, 4, naechstesJahr, 10, 15, 
-				    					      "Bier für morgige Maifeiertag besorgen" );
+				    					      "Bier für morgigen Maifeiertag besorgen" );
 
 			_reminderService.reminderAnlegen( 31, 10, naechstesJahr, 15, 0, 
 				                              "Halloween – Süßes oder Saures vorbereiten!" );

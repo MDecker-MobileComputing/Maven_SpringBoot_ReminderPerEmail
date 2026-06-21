@@ -30,6 +30,7 @@ public class ThymeleafController {
     /** Bean mit Geschäftslogik. */
     private ReminderService _reminderService;
      
+    /** Bean für Zugriff auf Zeitreihendatenbank. */
     private InfluxDB _influxDb;
         
     

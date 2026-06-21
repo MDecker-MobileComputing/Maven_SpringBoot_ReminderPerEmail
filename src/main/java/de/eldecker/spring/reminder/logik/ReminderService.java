@@ -103,7 +103,7 @@ public class ReminderService {
         try {
             
             faelligkeitsZeitpunkt = LocalDateTime.of( jahr, monat, tag,                                     
-                                                     stunde, minute );                                                          
+                                                      stunde, minute );                                                          
             final LocalDateTime now = now();
             if ( faelligkeitsZeitpunkt.isBefore( now ) ) {
                 

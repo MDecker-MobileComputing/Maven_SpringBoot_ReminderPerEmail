@@ -131,8 +131,7 @@ public class InfluxDB {
      *  
      * @return Anzahl insgesamt versendeter Emails, {@code -1} wenn hierbei ein
      *         Fehler aufgetreten ist.
-     */
-    
+     */    
     public int getGesamtzahlEmails() {
 
     	final String fluxQuery = 
@@ -164,7 +163,8 @@ public class InfluxDB {
             
         } catch ( Exception ex ) {
         	
-            LOG.error( "Fehler beim Lesen der Gesamtanzahl versendeter Emails aus InfluxDB.", ex );
+            LOG.error( 
+            		"Fehler beim Lesen der Gesamtanzahl versendeter Emails aus InfluxDB.", ex );
         }        
         
         return -1;

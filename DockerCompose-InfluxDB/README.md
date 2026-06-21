@@ -40,9 +40,9 @@ Messwerte verloren, sowie die in Grafana konfigurierten Dashboards.
 * Als URL folgendes eingeben: http://influxdb:8086 (nicht `localhost` verwenden, weil die Container in Docker ein gemeinsames Netzwerk verwenden)
 
 * Unter "InfluxDB Details" folgende Eingaben machen:
-  * Organization: `reminder-org`
-  * Token: `mein-super-geheimes-auth-token`
-  * Default Buckert: `reminder-bucket`
+  * Organization  : `reminder-org`
+  * Token         : `mein-super-geheimes-auth-token`
+  * Default Bucket: `reminder-bucket`
 
 * Danach auf den Button "Save & test" klicken
 
@@ -66,7 +66,8 @@ from(bucket: "reminder-bucket")
   |> filter(fn: (r) => r._field == "schon_versendet" or r._field == "nicht_versendet")
 ```
 
-Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite, um folgendes einzugeben: "Reminder: Versendet und ausstehend"
+Klicken Sie nach Eingabe der Query in ein anderes Feld, z.B. das Feld "Title" in der Leiste auf der rechten Seite, 
+um folgendes einzugeben: "Reminder: Versendet und ausstehend"
 
 In der linken Leiste gibt es auch eine Sektion "Standard Option" (muss evtl. aufgeklappt werden), in der man als "Min"-Wert `0` eingeben kann.
 
